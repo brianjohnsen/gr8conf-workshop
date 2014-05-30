@@ -402,20 +402,91 @@ class PersonSpec extends Specification {
             <section>
                 <h2>Scaffolded controller</h2>
 <pre><code data-trim>
-///grails-app/controllers/grailsdemo/PersonController.groovy
+//grails-app/controllers/grailsdemo/PersonController.groovy
 class PersonController {
     static scaffold = true
 }
 </code></pre>
                 <p>Fire it up and give it a spin</p>
+                <p><pre><code data-trim>$ grails run-app</code></pre></p>
+            </section>
+
+
+            <section>
+                <h2>Stop the presses</h2>
+                <h3>It's backed by a real database!</h3>
+                <p>Browse to http://localhost:8080/demo/dbconsole</p>
+                <img src="images/dbconsole.png" />
+            </section>
+
+
+            <section>
+                <h2>Back on track</h2>
+                <img src="images/backontrack.jpg" />
+            </section>
+
+
+            <section>
+                <h2>Generate controller</h2>
+                <img src="images/work.jpeg" />
+                <p><pre><code data-trim>$ grails generate-controller grailsdemo.Person</code></pre></p>
             </section>
 
             <section>
-                <h2>Youre in control</h2>
-                <img src="images/work.jpeg" />
-                <p><code>grails generate-controller Person</code></p>
+                <h2>All that code</h2>
+                <p>Open:</p>
+                <pre><code data-trim>grails-app/controllers/grailsdemo/PersonController.groovy</code></pre>
             </section>
 
+
+            <section>
+                <h2>Something like this?</h2>
+                <pre><code data-trim>
+//grails-app/controllers/grailsdemo/PersonController.groovy
+@Transactional(readOnly = true)
+class PersonController {
+
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond Person.list(params), model:[personInstanceCount: Person.count()]
+    }
+
+    def show(Person personInstance) {
+        respond personInstance
+    }
+    ...
+    ...
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h2>Want some REST?</h2>
+            </section>
+
+            <section>
+                <h2>Automatic Content Negotiation</h2>
+                <p>http://localhost:8080/demo/person/show/1.json</p>
+                <pre><code data-trim>
+{
+    class: "grailsdemo.Person",
+    id: 1,
+    age: 41,
+    name: "Brian"
+}
+                </code></pre>
+
+                <br/>
+                <p>http://localhost:8080/demo/person/show/1.xml</p>
+                <pre><code data-trim>
+<person id="1">
+    <age>41</age>
+    <name>Brian</name>
+</person>
+                </code></pre>
+            </section>
 
 
 
