@@ -38,6 +38,10 @@
             </p>
         </section>
 
+
+        <!------------------------------------------------------->
+        <!---- WHOAMI ------------------------------------------->
+        <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
             <h2>Whoami</h2>
             <p><small>(whocares)</small></p>
@@ -50,6 +54,9 @@
         </section>
 
 
+        <!------------------------------------------------------->
+        <!---- INSTALL ------------------------------------------>
+        <!------------------------------------------------------->
         <section>
             <section data-background="images/presentation-16-9-pages2.png">
 
@@ -70,6 +77,10 @@ Grails version: 2.3.8
             </section>
         </section>
 
+
+        <!------------------------------------------------------->
+        <!---- FRAMEWORK & ARCHITECTURE ------------------------->
+        <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
             <section>
                 <h2>Full stack framework</h2>
@@ -93,6 +104,9 @@ Grails version: 2.3.8
         </section>
 
 
+        <!------------------------------------------------------->
+        <!---- DEMO ---------------------------------------------->
+        <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
             <h2>Lets get started!</h2>
         </section>
@@ -103,9 +117,12 @@ Grails version: 2.3.8
         </section>
 
 
+        <!------------------------------------------------------->
+        <!---- YOUR TURN ---------------------------------------->
+        <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
             <section>
-                <h2>Your turn</h2>
+                <h2>Your turn!</h2>
                 <img src="images/work.jpeg" />
             </section>
 
@@ -113,11 +130,21 @@ Grails version: 2.3.8
             <section>
                 <h2>CLI</h2>
 
+                <p>Try it out</p>
                 <pre><code data-trim>
-    $ grails create-app grails-intro
+    $ grails help
+                </code></pre>
+                It just goes on...
+            </section>
+
+            <section>
+                <h2>Create the app</h2>
+
+                <pre><code data-trim>
+    $ grails create-app grailsdemo
                 </code></pre>
                 <pre><code data-trim>
-    $ cd grails-intro
+    $ cd grailsdemo
                 </code></pre>
                 <pre><code data-trim>
     $ grails run-app
@@ -125,7 +152,7 @@ Grails version: 2.3.8
 
                 <br>
                 <pre><code data-trim>
-                    | Server running. Browse to http://localhost:8080/grails-intro
+                    | Server running. Browse to http://localhost:8080/grailsdemo
                 </code></pre>
                 <small>Open your favorite browser and check it out!</small>
             </section>
@@ -138,12 +165,49 @@ Grails version: 2.3.8
         </section>
 
 
+        <!------------------------------------------------------->
+        <!---- ANATOMY ------------------------------------------>
+        <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
-            <h2>Anatomy</h2>
-            <img src="images/anatomi.png" />
+            <section>
+                <h2>Anatomy</h2>
+                <img src="images/anatomi.png" />
+            </section>
+            <section>
+                <h2>Anatomy</h2>
+                <small>
+                    <ul>
+                        <li><code>grails-app</code> - Top level directory for Groovy sources</li>
+                        <ul>
+                            <li><code>conf</code> - Configuration sources.</li>
+                            <li><code>controllers</code> - Web controllers - The C in MVC.</li>
+                            <li><code>domain</code> - The application domain - The M in MVC.</li>
+                            <li><code>i18n</code> - Support for internationalization (i18n).</li>
+                            <li><code>migrations</code> - Database migration.</li>
+                            <li><code>services</code> - The service layer.</li>
+                            <li><code>taglib</code> - Tag libraries.</li>
+                            <li><code>utils</code> - Grails specific utilities.</li>
+                            <li><code>views</code> - Groovy Server Pages - The V in MVC.</li>
+                        </ul>
+                        <li><code>scripts</code> - Gant scripts.</li>
+                        <li><code>src</code> - Supporting sources</li>
+                        <ul>
+                            <li><code>groovy</code> - Other Groovy sources</li>
+                            <li><code>java</code> - Other Java sources</li>
+                        </ul>
+                        <li><code>test</code> - Unit and integration tests.</li>
+                        <li><code>web-app</code> - JavaScript and CSS.</li>
+                        <li><code>wrapper</code> - Wrapper.</li>
+                    </ul>
+                </small>
+
+            </section>
         </section>
 
 
+        <!------------------------------------------------------->
+        <!---- DOMAIN MODEL ------------------------------------->
+        <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
             <section>
                 <h2>Domain</h2>
@@ -163,7 +227,7 @@ Grails version: 2.3.8
             </section>
 
             <section>
-                <h2>Domain</h2>
+                <h2>My first domain class</h2>
 <pre><code data-trim>
     $ grails create-domain-class Person
 </code></pre>
@@ -180,15 +244,191 @@ class Person {
 </code></pre>
             </section>
 
+            <section>
+                <h2>Save and validate</h2>
+                <p>
+                    <code>constraints</code> are enforced on <code>save()</code> and <code>validate()</code>
+                </p>
+<pre><code data-trim>
+def person = new Person(age: 42, name: 'Douglas Adams')
+
+person.validate() //only checks constraints
+person.save() //saves the instance to the database
+</code></pre>
+            </section>
+
+            <section>
+                <h2>whole lotta dynamic goin’ on</h2>
+                <p>All properties are dynamically matched to finders</p>
+<pre><code data-trim>
+def everybody = Person.list()
+def theOne = Person.findByNameAndAge('Brian', 41)
+def caseInsensitive = Person.findAllByNameIlike('graeme')
+def underAge = Person.findAllByAgeLessThan(18)
+def seniors = Person.findAllByAgeGreaterThanEquals(65)
+def orderedByName = Person.listOrderByName()
+</code></pre>
+            </section>
+
+        </section>
+
+
+
+        <!------------------------------------------------------->
+        <!---- TESTING ------------------------------------------>
+        <!------------------------------------------------------->
+        <section data-background="images/presentation-16-9-pages2.png">
+            <section>
+                <h2>Testing</h2>
+                <p><code>/test/unit/</code></p>
+                <br/>
+                <ul>
+                    <li>Spock Specifications</li>
+                    <li>Deeply integrated in Grails</li>
+                    <li>When creating any artifact a corresponding test is created</li>
+                    <ul><li>Creating <code>Person</code> also gives <code>PersonSpec</code></li></ul>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Test demo!</h2>
+                <img src="images/hammertime.jpg" />
+            </section>
+
+            <section>
+                <h2>Spock test default</h2>
+<pre><code data-trim>
+    //test/unit/grailsdemo/PersonSpec.groovy
+@TestFor(Person)
+class PersonSpec extends Specification {
+    def setup() {
+    }
+
+    def cleanup() {
+    }
+
+    void "test something"() {
+    }
+}
+</code></pre>
+            </section>
+
+
+            <section>
+                <h2>Write a test!</h2>
+                <img src="images/work.jpeg" />
+                <p>"age should be more than 0"</p>
+            </section>
+
+
+            <section>
+                <h2>Could look like this</h2>
+<pre><code data-trim>
+    //test/unit/grailsdemo/PersonSpec.groovy
+@TestFor(Person)
+class PersonSpec extends Specification {
+    void "age should be more than 0"() {
+    	when:
+    	def person = new Person(age: age, name: 'joe')
+
+    	then:
+    	person.validate() == valid
+
+    	where:
+    	age	| valid
+    	0	| true
+    	41	| true
+    	-1	| false
+    }
+}
+</code></pre>
+            </section>
+
+        </section>
+
+
+        <!------------------------------------------------------->
+        <!---- CONTROLLERS ------------------------------------------>
+        <!------------------------------------------------------->
+        <section data-background="images/presentation-16-9-pages2.png">
+            <section>
+                <h2>Taking control</h2>
+                <p><code>/grails-app/controllers/</code></p>
+                <br/>
+                <ul>
+                    <li>The C in MVC</li>
+                    <li>Data binding</li>
+                    <li>Redirecting requests</li>
+                    <li>Delegating to business logic (spoiler: <code>services</code>)</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Him again!</h2>
+                <img src="images/hammertime.jpg" />
+                <p>Scaffolded UI</p>
+            </section>
+
+            <section>
+                <h2>Scaffolded controller</h2>
+<pre><code data-trim>
+///grails-app/controllers/demo/PersonController.groovy
+class PersonController {
+    static scaffold = true
+}
+</code></pre>
+            </section>
+
+            <section>
+                <h2>Youre in control</h2>
+                <img src="images/work.jpeg" />
+                <p><code>grails create-controller Person</code></p>
+            </section>
+
+
+            <section>
+                <h2>Could look like this</h2>
+<pre><code data-trim>
+    //test/unit/grailsdemo/PersonSpec.groovy
+@TestFor(Person)
+class PersonSpec extends Specification {
+    void "age should be more than 0"() {
+    	when:
+    	def person = new Person(age: age, name: 'joe')
+
+    	then:
+    	person.validate() == valid
+
+    	where:
+    	age	| valid
+    	0	| true
+    	41	| true
+    	-1	| false
+    }
+}
+</code></pre>
+            </section>
+
         </section>
 
 
 
 
 
-    </div>
 
+    </div>
 </div>
+
+
+
+
+
+
+
+
+<!------------------------------------------------------->
+<!---- REVEAL STUFF ------------------------------------->
+<!------------------------------------------------------->
 
 <script src="lib/js/head.min.js"></script>
 <script src="js/reveal.min.js"></script>
