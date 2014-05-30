@@ -206,6 +206,36 @@ Grails version: 2.3.8
 
 
         <!------------------------------------------------------->
+        <!---- NO FORK! ------------------------------------------>
+        <!------------------------------------------------------->
+        <section data-background="images/presentation-16-9-pages2.png">
+            <section>
+                <img src="images/panik.jpg" />
+            </section>
+            <section>
+                <h2>Don't let friends fork</h2>
+                <p>Open:</p>
+                <pre><code data-trim>/grails-app/conf/BuildConfig.groovy</code></pre>
+                <p>Change:</p>
+                <pre><code data-trim>
+grails.project.fork = [
+    // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
+    ...
+    ...
+    // configure settings for the Console UI JVM
+    console: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256]
+]
+                </code></pre>
+                <p>To:</p>
+                <pre><code data-trim>
+grails.project.fork = false
+                </code></pre>
+
+            </section>
+        </section>
+
+
+        <!------------------------------------------------------->
         <!---- DOMAIN MODEL ------------------------------------->
         <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
@@ -359,7 +389,7 @@ class PersonSpec extends Specification {
                     <li>The C in MVC</li>
                     <li>Data binding</li>
                     <li>Redirecting requests</li>
-                    <li>Delegating to business logic (spoiler: <code>services</code>)</li>
+                    <li>Delegating to business logic</li>
                 </ul>
             </section>
 
@@ -372,42 +402,22 @@ class PersonSpec extends Specification {
             <section>
                 <h2>Scaffolded controller</h2>
 <pre><code data-trim>
-///grails-app/controllers/demo/PersonController.groovy
+///grails-app/controllers/grailsdemo/PersonController.groovy
 class PersonController {
     static scaffold = true
 }
 </code></pre>
+                <p>Fire it up and give it a spin</p>
             </section>
 
             <section>
                 <h2>Youre in control</h2>
                 <img src="images/work.jpeg" />
-                <p><code>grails create-controller Person</code></p>
+                <p><code>grails generate-controller Person</code></p>
             </section>
 
 
-            <section>
-                <h2>Could look like this</h2>
-<pre><code data-trim>
-    //test/unit/grailsdemo/PersonSpec.groovy
-@TestFor(Person)
-class PersonSpec extends Specification {
-    void "age should be more than 0"() {
-    	when:
-    	def person = new Person(age: age, name: 'joe')
 
-    	then:
-    	person.validate() == valid
-
-    	where:
-    	age	| valid
-    	0	| true
-    	41	| true
-    	-1	| false
-    }
-}
-</code></pre>
-            </section>
 
         </section>
 
