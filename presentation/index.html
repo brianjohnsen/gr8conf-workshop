@@ -47,7 +47,7 @@
             <p><small>(whocares)</small></p>
             <ul>
                 <li>Brian Johnsen, Gennemtænkt IT A/S</li>
-                <li>10+ years Java</li>
+                <li>12+ years Java</li>
                 <li>Groovy & Grails since 2008</li>
                 <li>Your Friendly Neighborhood GR8Conf Organizer</li>
             </ul>
@@ -244,6 +244,7 @@ grails.project.fork = false
                 <p><code>/grails-app/domain/</code></p>
                 <br/>
                 <ul>
+                    <li>The M in MVC</li>
                     <li>Gets mapped to the database</li>
                     <li>Dynamic finders FTW -> Forget SQL</li>
                     <li><code>constraints</code> enforce database consistency</li>
@@ -268,7 +269,8 @@ class Person {
     String name
     Integer age
     static constraints = {
-        age min: 0
+        name blank: false
+    	age min: 0
     }
 }
 </code></pre>
@@ -289,7 +291,7 @@ person.save() //saves the instance to the database
 
             <section>
                 <h2>whole lotta dynamic goin’ on</h2>
-                <p>All properties are dynamically matched to finders</p>
+                <p>Finders are dynamically created for all properties</p>
 <pre><code data-trim>
 def everybody = Person.list()
 def theOne = Person.findByNameAndAge('Brian', 41)
@@ -316,7 +318,7 @@ def orderedByName = Person.listOrderByName()
                     <li>Spock Specifications</li>
                     <li>Deeply integrated in Grails</li>
                     <li>When creating any artifact a corresponding test is created</li>
-                    <ul><li>Creating <code>Person</code> also gives <code>PersonSpec</code></li></ul>
+                    <ul><li>Creating <code>Person</code> also creates a <code>PersonSpec</code></li></ul>
                 </ul>
             </section>
 
@@ -374,6 +376,17 @@ class PersonSpec extends Specification {
 </code></pre>
             </section>
 
+
+            <section>
+                <h2>Testing</h2>
+                <h3>The easiest way to execute code!</h3>
+                <img src="images/work.jpeg" />
+                <p>Play with dynamic finders</p>
+            </section>
+
+
+
+
         </section>
 
 
@@ -421,6 +434,33 @@ class PersonController {
 
 
             <section>
+                <h2>Want some REST?</h2>
+            </section>
+
+            <section>
+                <h2>Automatic Content Negotiation</h2>
+                <p>http://localhost:8080/demo/person/show/1.json</p>
+                <pre><code data-trim>
+{
+    class: "grailsdemo.Person",
+    id: 1,
+    age: 41,
+    name: "Brian"
+}
+                </code></pre>
+
+                <br/>
+                <p>http://localhost:8080/demo/person/show/1.xml</p>
+                <pre><code data-trim>
+<person id="1">
+    <age>41</age>
+    <name>Brian</name>
+</person>
+                </code></pre>
+            </section>
+
+
+            <section>
                 <h2>Back on track</h2>
                 <img src="images/backontrack.jpg" />
             </section>
@@ -450,7 +490,7 @@ class PersonController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Person.list(params), model:[personInstanceCount: Person.count()]
+        respond Person.list(params), model: [personInstanceCount: Person.count()]
     }
 
     def show(Person personInstance) {
@@ -462,32 +502,37 @@ class PersonController {
                 </code></pre>
             </section>
 
-            <section>
-                <h2>Want some REST?</h2>
-            </section>
 
             <section>
-                <h2>Automatic Content Negotiation</h2>
-                <p>http://localhost:8080/demo/person/show/1.json</p>
+                <h2>Testing controllers</h2>
+                <p>Run:</p>
                 <pre><code data-trim>
-{
-    class: "grailsdemo.Person",
-    id: 1,
-    age: 41,
-    name: "Brian"
-}
+                    $ grails test-app unit: PersonController
                 </code></pre>
-
-                <br/>
-                <p>http://localhost:8080/demo/person/show/1.xml</p>
-                <pre><code data-trim>
-<person id="1">
-    <age>41</age>
-    <name>Brian</name>
-</person>
-                </code></pre>
+                <p>What happens?</p>
             </section>
-
+            <section>
+                <h2>Testing controllers</h2>
+                <p>Open: <code>/test/unit/grailsdemo/PersonControllerSpec.groovy</code></p>
+            </section>
+            <section>
+                <h2>Testing controllers</h2>
+                <p>Change:</p>
+                <pre><code data-trim>
+    def populateValidParams(params) {
+        assert params != null
+        // TODO: Populate valid properties like...
+        //params["name"] = 'someValidName'
+    }
+                </code></pre>
+                <p>To:</p>
+                <pre><code data-trim>
+    def populateValidParams(params) {
+        assert params != null
+        params["name"] = 'joe' //or whatever
+        params["age"] = 42 //or whatever
+    }                </code></pre>
+            </section>
 
 
         </section>
@@ -495,6 +540,106 @@ class PersonController {
 
 
 
+        <!------------------------------------------------------->
+        <!---- VIEW ------------------------------------------>
+        <!------------------------------------------------------->
+        <section data-background="images/presentation-16-9-pages2.png">
+            <section>
+                <h2>View</h2>
+                <p><code>/grails-app/views/</code></p>
+                <br/>
+                <ul>
+                    <li>The V in MVC</li>
+                    <li>GSP</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Generated UI Demo</h2>
+                <img src="images/hammertime.jpg" />
+            </section>
+
+            <section>
+                <h2>Generate views</h2>
+                <img src="images/work.jpeg" />
+                <p><pre><code data-trim>$ grails generate-all grailsdemo.Person</code></pre></p>
+            </section>
+
+            <section>
+                <h2>The index view</h2>
+                <p>Open:</p>
+                <pre><code data-trim>grails-app/views/person/index.gsp</code></pre>
+            </section>
+
+        </section>
+
+
+
+        <!------------------------------------------------------->
+        <!---- UPDATE APP ------------------------------------------>
+        <!------------------------------------------------------->
+        <section data-background="images/presentation-16-9-pages2.png">
+            <section>
+                <h2>Lets add a new feature</h2>
+                <p>Person should have country</p>
+<pre><code data-trim>
+//grails-app/domain/Person.groovy
+class Person {
+    String name
+    Integer age
+    String country
+    static constraints = {
+        name blank: false
+    	age min: 0
+        country nullable: true
+    }
+}
+</code></pre>
+            </section>
+
+            <section>
+                <h2>Update the tests</h2>
+                <img src="images/work.jpeg" />
+                <p>Open:</p>
+                <pre><code data-trim>test/unit/grailsdemo/PersonSpec.groovy</code></pre>
+            </section>
+
+            <section>
+                <h2>Update the view</h2>
+                <p>Open:</p>
+                <pre><code data-trim>grails-app/views/person/index.gsp</code></pre>
+                <p>and:</p>
+                <pre><code data-trim>grails-app/views/person/_form.gsp</code></pre>
+            </section>
+
+
+            <section>
+                <h2>Another new feature</h2>
+                <p>Creating a new person should send you to the list view (index)</p>
+                <p>Open:</p>
+                <pre><code data-trim>grails-app/controllers/grailsdemo/PersonController.groovy</code></pre>
+            </section>
+
+
+        </section>
+
+
+        <!------------------------------------------------------->
+        <!---- PLUGINS ------------------------------------------>
+        <!------------------------------------------------------->
+        <section data-background="images/presentation-16-9-pages2.png">
+            <h2>Plugins</h2>
+            <p><code>https://grails.org/plugins/</code></p>
+            <br/>
+            <ul>
+                <li>Build Test Data</li>
+                <li>Searchable</li>
+                <li>Quartz</li>
+                <li>Spring Security</li>
+                <li>MongoDB</li>
+                <li>and it goes on and on...</li>
+            </ul>
+        </section>
 
 
     </div>
