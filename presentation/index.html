@@ -16,6 +16,15 @@
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
 
+    <!-- Include the appropriate print stylesheet -->
+    <!--<script>-->
+        <!--var link = document.createElement( 'link' );-->
+        <!--link.rel = 'stylesheet';-->
+        <!--link.type = 'text/css';-->
+        <!--link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';-->
+        <!--document.getElementsByTagName( 'head' )[0].appendChild( link );-->
+    <!--</script>-->
+
     <!--[if lt IE 9]>
     <script src="lib/js/html5shiv.js"></script>
     <![endif]-->
@@ -55,6 +64,20 @@
 
 
         <!------------------------------------------------------->
+        <!---- AGENDA ------------------------------------------->
+        <!------------------------------------------------------->
+        <section data-background="images/presentation-16-9-pages2.png">
+            <h2>Agenda</h2>
+            <p><small>fire up the engines</small></p>
+            <ol>
+                <li>Install grails</li>
+                <li>Domain</li>
+                <li>...</li>
+            </ol>
+        </section>
+
+
+        <!------------------------------------------------------->
         <!---- INSTALL ------------------------------------------>
         <!------------------------------------------------------->
         <section>
@@ -62,18 +85,17 @@
 
                 <h2>Ready?</h2>
                 <ol>
-                    <li>Copy grails install to disk</li>
+                    <li>Copy grails install to disk and unzip</li>
                     <li>Add to path</li>
                     <li>Voilá</li>
                 </ol>
-
-            </section>
-            <section data-background="images/presentation-16-9-pages2.png">
-                <h2>Test It!</h2>
+                <br/>
+                <br/>
                 <pre><code data-trim>
 $ grails -version
 Grails version: 2.3.8
                 </code></pre>
+
             </section>
         </section>
 
@@ -97,30 +119,37 @@ Grails version: 2.3.8
                     <li>and a bunch of other stuff…                             </li>
                 </ul>
             </section>
+
             <section>
                 <h2>Architecture</h2>
                 <img src="images/grailsstack.png" />
             </section>
+
+            <section>
+                <h2>Philosophy</h2>
+                <img src="images/convention.jpg" />
+            </section>
         </section>
 
 
+
         <!------------------------------------------------------->
-        <!---- DEMO ---------------------------------------------->
+        <!---- CREATE THE APP ----------------------------------->
         <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
             <h2>Lets get started!</h2>
         </section>
 
-        <section data-background="images/presentation-16-9-pages2.png">
-            <h2>Demo time!</h2>
-            <img src="images/hammertime.jpg" />
-        </section>
-
-
         <!------------------------------------------------------->
-        <!---- YOUR TURN ---------------------------------------->
+        <!---- CREATE THE APP ----------------------------------->
         <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
+            <section>
+                <h2>Demo time!</h2>
+                <img src="images/hammertime.jpg" />
+                <p>CLI and create app demo</p>
+            </section>
+
             <section>
                 <h2>Your turn!</h2>
                 <img src="images/work.jpeg" />
@@ -158,7 +187,7 @@ Grails version: 2.3.8
             </section>
 
             <section>
-                <h2>Something like this?</h2>
+                <h2>Running application!</h2>
                 <img src="images/grails-startpage.png" />
             </section>
 
@@ -210,8 +239,13 @@ Grails version: 2.3.8
         <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
             <section>
+                <img src="images/stop.gif" />
+            </section>
+
+            <section>
                 <img src="images/panik.jpg" />
             </section>
+
             <section>
                 <h2>Don't let friends fork</h2>
                 <p>Open:</p>
@@ -379,8 +413,8 @@ class PersonSpec extends Specification {
 
             <section>
                 <h2>Testing</h2>
-                <h3>The easiest way to execute code!</h3>
-                <img src="images/work.jpeg" />
+                <h3> - The easiest way to execute code!</h3>
+                <img src="images/children-playing.jpg" />
                 <p>Play with dynamic finders</p>
             </section>
 
@@ -409,7 +443,7 @@ class PersonSpec extends Specification {
             <section>
                 <h2>Him again!</h2>
                 <img src="images/hammertime.jpg" />
-                <p>Scaffolded UI</p>
+                <p>Scaffolded UI Demo</p>
             </section>
 
             <section>
@@ -510,11 +544,11 @@ class PersonController {
                     $ grails test-app unit: PersonController
                 </code></pre>
                 <p>What happens?</p>
+                <br/>
+                <p>Open:</p>
+                <pre><code data-trim>/test/unit/grailsdemo/PersonControllerSpec.groovy</code></pre>
             </section>
-            <section>
-                <h2>Testing controllers</h2>
-                <p>Open: <code>/test/unit/grailsdemo/PersonControllerSpec.groovy</code></p>
-            </section>
+
             <section>
                 <h2>Testing controllers</h2>
                 <p>Change:</p>
@@ -535,6 +569,13 @@ class PersonController {
             </section>
 
 
+            <section>
+                <h2>More Testing</h2>
+                <img src="images/children-playing.jpg" />
+                <p>Do we have the time?</p>
+            </section>
+
+
         </section>
 
 
@@ -545,18 +586,13 @@ class PersonController {
         <!------------------------------------------------------->
         <section data-background="images/presentation-16-9-pages2.png">
             <section>
-                <h2>View</h2>
+                <h2>Views</h2>
                 <p><code>/grails-app/views/</code></p>
                 <br/>
                 <ul>
                     <li>The V in MVC</li>
                     <li>GSP</li>
                 </ul>
-            </section>
-
-            <section>
-                <h2>Generated UI Demo</h2>
-                <img src="images/hammertime.jpg" />
             </section>
 
             <section>
@@ -569,6 +605,76 @@ class PersonController {
                 <h2>The index view</h2>
                 <p>Open:</p>
                 <pre><code data-trim>grails-app/views/person/index.gsp</code></pre>
+            </section>
+
+            <section>
+                <h2>The show view</h2>
+                <p>Open:</p>
+                <pre><code data-trim>grails-app/views/person/show.gsp</code></pre>
+            </section>
+
+            <section>
+                <h2>Create and edit views - templates</h2>
+                <p>Open:</p>
+                <pre><code data-trim>grails-app/views/person/create.gsp</code></pre>
+                <pre><code data-trim>grails-app/views/person/edit.gsp</code></pre>
+                <pre><code data-trim>grails-app/views/person/_form.gsp</code></pre>
+            </section>
+
+        </section>
+
+
+
+        <!------------------------------------------------------->
+        <!---- SERVICES ------------------------------------------>
+        <!------------------------------------------------------->
+        <section data-background="images/presentation-16-9-pages2.png">
+            <section>
+                <h2>Services</h2>
+                <p><code>/grails-app/services/</code></p>
+                <br/>
+                <ul>
+                    <li>Should contain all business logic</li>
+                    <li>Transactional</li>
+                    <li>Injected into any artefact</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Create the service</h2>
+                <img src="images/work.jpeg" />
+                <p><pre><code data-trim>$ grails create-service Person</code></pre></p>
+
+                <p>Open:</p>
+                <pre><code data-trim>grails-app/services/demo/PersonService.groovy</code></pre>
+            </section>
+
+            <section>
+                <h2>Update the service</h2>
+                <p><pre><code data-trim>
+@Transactional
+class PersonService {
+    def getAll() {
+        Person.list()
+    }
+}
+
+                </code></pre></p>
+            </section>
+
+            <section>
+                <h2>Update the controller</h2>
+                <p><pre><code data-trim>
+class PersonController {
+
+    PersonService personService //injected by grails
+
+    def index(Integer max) {
+        respond personService.getAll()
+    }
+...
+}
+                </code></pre></p>
             </section>
 
         </section>
